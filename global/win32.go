@@ -1,10 +1,18 @@
+//go:build windows
+// +build windows
+
+//Added this because my memory access method wasn't being recognised since I'm using linux.
+
 package global
 
 import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"golang.org/x/sys/windows"
 	"math"
+	"os"
+	"unsafe"
 )
 
 //Contains Microsoft Windows specific code
@@ -190,4 +198,43 @@ func formatQword(arr []U1, start int) {
 	arr[start], arr[start+1], arr[start+2], arr[start+3],
 		arr[start+4], arr[start+5], arr[start+6], arr[start+7] =
 		fb0, fb1, fb2, fb3, fb4, fb5, fb6, fb7
+}
+
+// MEMORYSTATUSEX Obtaining memory stats and file details
+type MEMORYSTATUSEX struct {
+	Length               uint32
+	MemoryLoad           uint32
+	TotalPhys            uint64
+	AvailPhys            uint64
+	TotalPageFile        uint64
+	AvailPageFile        uint64
+	TotalVirtual         uint64
+	AvailVirtual         uint64
+	AvailExtendedVirtual uint64
+}
+
+func getAvailableMemory() (uint64, uint64) {
+	msx := MEMORYSTATUSEX{
+		Length: uint32(unsafe.Sizeof(MEMORYSTATUSEX{})),
+	}
+
+	if err := windows.GlobalMemoryStatusEx(msx); err != nil {
+		fmt.Printf("Failed to get memory status: %v", err)
+		return 0, 0
+	}
+	return msx.TotalPhys, msx.AvailPhys
+} /*end getAvailableMemory*/
+
+// ensures that bytecode executable loaded to memory ain't bigger than the memory its being loaded to
+func getFileSize(filePath *string, err error) U4 {
+	if filePath == nil {
+		return 0, fmt.Errorf("filePath is nil.")
+	}
+
+	fileInfo, err := os.Open(*filePath)
+	if err != nil {
+		return 0, err
+	}
+
+	return fileInfo.Size(), nil
 }
