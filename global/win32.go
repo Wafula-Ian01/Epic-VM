@@ -171,3 +171,23 @@ func doubleToByteCode(doubleValue F8) []U1 {
 
 	return buff.Bytes()
 }
+
+// byte swapping for endian conversions
+func formatWord(arr []U1, start int) {
+	fb0, fb1 := arr[start+1], arr[start]
+	arr[start], arr[start+1] = fb0, fb1
+}
+
+func formatDword(arr []U1, start int) {
+	fb0, fb1, fb2, fb3 := arr[start+3], arr[start+2], arr[start+1], arr[start]
+	arr[start], arr[start+1], arr[start+2], arr[start+3] = fb0, fb1, fb2, fb3
+}
+
+func formatQword(arr []U1, start int) {
+	fb0, fb1, fb2, fb3, fb4, fb5, fb6, fb7 :=
+		arr[start+7], arr[start+6], arr[start+5], arr[start+4],
+		arr[start+3], arr[start+2], arr[start+1], arr[start]
+	arr[start], arr[start+1], arr[start+2], arr[start+3],
+		arr[start+4], arr[start+5], arr[start+6], arr[start+7] =
+		fb0, fb1, fb2, fb3, fb4, fb5, fb6, fb7
+}
