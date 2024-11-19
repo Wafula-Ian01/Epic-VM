@@ -26,15 +26,15 @@ type F4 = float32 //represents float
 type F8 = float64 //represents double
 
 func checkEndian() { //Checks for the endianness of the platform running the VM
-	var hexValue uint32 = 0xDEED1234            //declare a hex value
-	bytes := make([]byte, 4)                    //create a splice of bytes
-	binary.BigEndian.PutUint32(bytes, hexValue) //insert the hex value into the splice
+	var hexValue uint32 = 0xDEED1234               //declare a hex value
+	bytesArr := make([]byte, 4)                    //create a splice of bytes
+	binary.BigEndian.PutUint32(bytesArr, hexValue) //insert the hex value into the splice
 	var j int
 
 	fmt.Printf("Value= %v\n", hexValue)
-	if binary.BigEndian.Uint32(bytes) == hexValue { //check for big endianness
+	if binary.BigEndian.Uint32(bytesArr) == hexValue { //check for big endianness
 		fmt.Printf("this Platform is Little Endianness. Lower bytes come first.")
-	} else if binary.LittleEndian.Uint32(bytes) == hexValue { //check for small endianness
+	} else if binary.LittleEndian.Uint32(bytesArr) == hexValue { //check for small endianness
 		fmt.Printf("this platform is Big Endianness. Upper bytes come first")
 	} else { //endianness unknown
 		fmt.Printf("This platform's Endianness is unknown.")
@@ -44,7 +44,7 @@ func checkEndian() { //Checks for the endianness of the platform running the VM
 	fmt.Printf("\nhere are the 4 bytes\n")
 
 	for j = 0; j < 4; j++ {
-		fmt.Printf("bytes[%d]= %x", j, bytes)
+		fmt.Printf("bytes[%d]= %x", j, bytesArr)
 	}
 	return
 } //End of checking Endianness
