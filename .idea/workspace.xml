@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f5f8467f-c0b2-40e6-a843-a28db9d59148" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-=======
       <change beforePath="$PROJECT_DIR$/global/win32.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/win32.go" afterDir="false" />
->>>>>>> 632fd27 (managing little endianness)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
