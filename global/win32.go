@@ -6,18 +6,9 @@
 
 package global
 
-import (
-	"C"
-	"bytes"
-	"encoding/binary"
-	"fmt"
-	"golang.org/x/sys/windows"
-	"math"
-	"os"
-	"unsafe"
-)
-
 /*
+#include <stdint.h>
+
 // S1 signed data datatypes
 #define S1 signed char
 #define S2 signed short
@@ -55,6 +46,17 @@ import (
 #define fpS8(ptr, arg) fprintf(ptr, "%I64d", arg)
 
 */
+import "C"
+
+import (
+	"bytes"
+	"encoding/binary"
+	"fmt"
+	"golang.org/x/sys/windows"
+	"math"
+	"os"
+	"unsafe"
+)
 
 //Contains Microsoft Windows specific code
 

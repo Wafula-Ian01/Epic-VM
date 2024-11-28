@@ -9,8 +9,6 @@
       <change beforePath="$PROJECT_DIR$/global/common.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/common.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/global/iset.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/iset.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/global/win32.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/win32.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/global/win32_test.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
