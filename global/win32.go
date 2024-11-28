@@ -2,10 +2,12 @@
 // +build windows
 
 //Added this because my memory access method wasn't being recognised since I'm using linux.
+//And this is a windows specific file
 
 package global
 
 import (
+	"C"
 	"bytes"
 	"encoding/binary"
 	"fmt"
@@ -15,23 +17,46 @@ import (
 	"unsafe"
 )
 
-//Contains Microsoft Windows specific code
-
+/*
 // S1 signed data datatypes
-type S1 = byte  //represents a char
-type S2 = int16 //represents a short
-type S4 = int32 //represents a long
-type S8 = int64 //represents long long __int64
+#define S1 signed char
+#define S2 signed short
+#define S4 signed long
+#define S8 signed __int64
 
 // U1 unsigned data datatypes
-type U1 = byte   //represents a char
-type U2 = uint16 //represents a short
-type U4 = uint32 //represents a long
-type U8 = uint64 //represents long long or __uint64
+#define U1 unsigned char
+#define U2 unsigned short
+#define U4 unsigned long
+#define U8 unsigned __int64
 
 // F4 float and double
-type F4 = float32 //represents float
-type F8 = float64 //represents double
+#define F4 float
+#define F8 double
+
+#define PRINT_UREG(rstr, reg) printf("%-6s=%-21I64u", rstr, reg)
+#define PRINT_SREG(rstr, reg) printf("%-6s=%-21I64d", rstr, reg)
+#define PRINT_FREG(rstr, reg) printf("%-6s=%g", rstr, (F4)reg)
+#define PRINT_DREG(rstr, reg) printf("%-6s=%g", rstr, (F8)reg)
+
+#define pU1(arg) printf("%u", arg)
+#define pU2(arg) printf("%hu", arg)
+#define pU4(arg) printf("%lu", arg)
+#define pU8(arg) printf("%I64lu", arg)
+
+#define pS1(arg) printf("%d", arg)
+#define pS2(arg) printf("%hd", arg)
+#define pS4(arg) printf("%ld", arg)
+#define pS8(arg) printf("%I64d", arg)
+
+#define rU8(arg) scanf("%I64ld", arg)
+
+#define fpU8(ptr, arg) fprintf(ptr, "%I64lu", arg)
+#define fpS8(ptr, arg) fprintf(ptr, "%I64d", arg)
+
+*/
+
+//Contains Microsoft Windows specific code
 
 func checkEndian() { //Checks for the endianness of the platform running the VM
 	var hexValue uint32 = 0xDEED1234               //declare a hex value
@@ -57,38 +82,37 @@ func checkEndian() { //Checks for the endianness of the platform running the VM
 	return
 } //End of checking Endianness
 
-func byteCodeToWord(bytes []U1) U2 {
+func byteCodeToWord(bytes []C.U1) C.U2 {
 	if len(bytes) != 2 {
 		panic("Input slice must contain 2 bytes")
 	}
-	word := U2(bytes[1]) | U2(bytes[0])<<8
+	word := C.U2(bytes[1]) | C.U2(bytes[0])<<8
 
 	return word
-
 }
 
-func byteCodeToDword(bytes []U1) U4 {
+func byteCodeToDword(bytes []C.U1) C.U4 {
 	if len(bytes) != 4 {
 		panic("Input slice must contain 4 bytes")
 	}
 
-	dword := U4(bytes[3]) | U4(bytes[2])<<8 | U4(bytes[1])<<16 | U4(bytes[0])<<24
+	dword := C.U4(bytes[3]) | C.U4(bytes[2])<<8 | C.U4(bytes[1])<<16 | C.U4(bytes[0])<<24
 
 	return dword
 }
 
-func byteCodeToQword(bytes []U1) U8 {
+func byteCodeToQword(bytes []C.U1) C.U8 {
 	if len(bytes) != 8 {
 		panic("Input slice must contain 8 bytes")
 	}
 
-	qword := U8(bytes[7]) | U8(bytes[6])<<8 | U8(bytes[5])<<16 | U8(bytes[4])<<24 | U8(bytes[3])<<32 |
-		U8(bytes[2])<<40 | U8(bytes[1])<<48 | U8(bytes[0])<<56
+	qword := C.U8(bytes[7]) | C.U8(bytes[6])<<8 | C.U8(bytes[5])<<16 | C.U8(bytes[4])<<24 | C.U8(bytes[3])<<32 |
+		C.U8(bytes[2])<<40 | C.U8(bytes[1])<<48 | C.U8(bytes[0])<<56
 
 	return qword
 }
 
-func byteCodeToFloat(bytes []U1) F4 {
+func byteCodeToFloat(bytes []C.U1) C.F4 {
 	if len(bytes) != 4 {
 		panic("Input slice must contain 4 bytes")
 	}
@@ -103,7 +127,7 @@ func byteCodeToFloat(bytes []U1) F4 {
 	return floatValue
 }
 
-func byteCodeToDouble(bytes []U1) F8 {
+func byteCodeToDouble(bytes []C.U1) C.F8 {
 	if len(bytes) != 8 {
 		panic("Input slice must contain 8 bytes")
 	}
@@ -117,42 +141,42 @@ func byteCodeToDouble(bytes []U1) F8 {
 
 	return doubleValue
 }
-func wordToByteCode(word U2) []U1 {
-	arr := make([]U1, 2)
+func wordToByteCode(word C.U2) []C.U1 {
+	arr := make([]C.U1, 2)
 
-	arr[0] = U1(word >> 8)
-	arr[1] = U1(word & 0xFF)
-
-	return arr
-}
-
-func dwordToByteCode(dword U4) []U1 {
-	arr := make([]U1, 4)
-
-	arr[0] = U1(dword & 0xFF)
-	arr[1] = U1((dword >> 8) & 0xFF)
-	arr[2] = U1((dword >> 16) & 0xFF)
-	arr[3] = U1((dword >> 24) & 0xFF)
+	arr[0] = C.U1(word >> 8)
+	arr[1] = C.U1(word & 0xFF)
 
 	return arr
 }
 
-func qwordToByteCode(qword U8) []U1 {
-	arr := make([]U1, 8)
+func dwordToByteCode(dword C.U4) []C.U1 {
+	arr := make([]C.U1, 4)
 
-	arr[0] = U1(qword & 0xFF)
-	arr[1] = U1((qword >> 8) & 0xFF)
-	arr[2] = U1((qword >> 16) & 0xFF)
-	arr[3] = U1((qword >> 24) & 0xFF)
-	arr[4] = U1((qword >> 32) & 0xFF)
-	arr[5] = U1((qword >> 40) & 0xFF)
-	arr[6] = U1((qword >> 48) & 0xFF)
-	arr[7] = U1((qword >> 56) & 0xFF)
+	arr[0] = C.U1(dword & 0xFF)
+	arr[1] = C.U1((dword >> 8) & 0xFF)
+	arr[2] = C.U1((dword >> 16) & 0xFF)
+	arr[3] = C.U1((dword >> 24) & 0xFF)
 
 	return arr
 }
 
-func floatToByteCode(floatValue F4) []U1 {
+func qwordToByteCode(qword C.U8) []C.U1 {
+	arr := make([]C.U1, 8)
+
+	arr[0] = C.U1(qword & 0xFF)
+	arr[1] = C.U1((qword >> 8) & 0xFF)
+	arr[2] = C.U1((qword >> 16) & 0xFF)
+	arr[3] = C.U1((qword >> 24) & 0xFF)
+	arr[4] = C.U1((qword >> 32) & 0xFF)
+	arr[5] = C.U1((qword >> 40) & 0xFF)
+	arr[6] = C.U1((qword >> 48) & 0xFF)
+	arr[7] = C.U1((qword >> 56) & 0xFF)
+
+	return arr
+}
+
+func floatToByteCode(floatValue C.F4) []C.U1 {
 	bits := math.Float32bits(floatValue)
 
 	buff := new(bytes.Buffer)
@@ -166,7 +190,7 @@ func floatToByteCode(floatValue F4) []U1 {
 	return buff.Bytes()
 }
 
-func doubleToByteCode(doubleValue F8) []U1 {
+func doubleToByteCode(doubleValue C.F8) []C.U1 {
 	bits := math.Float64bits(doubleValue)
 
 	buff := new(bytes.Buffer) // holds the byte sequence
@@ -181,17 +205,17 @@ func doubleToByteCode(doubleValue F8) []U1 {
 }
 
 // byte swapping for endian conversions
-func formatWord(arr []U1, start int) {
+func formatWord(arr []C.U1, start int) {
 	fb0, fb1 := arr[start+1], arr[start]
 	arr[start], arr[start+1] = fb0, fb1
 }
 
-func formatDword(arr []U1, start int) {
+func formatDword(arr []C.U1, start int) {
 	fb0, fb1, fb2, fb3 := arr[start+3], arr[start+2], arr[start+1], arr[start]
 	arr[start], arr[start+1], arr[start+2], arr[start+3] = fb0, fb1, fb2, fb3
 }
 
-func formatQword(arr []U1, start int) {
+func formatQword(arr []C.U1, start int) {
 	fb0, fb1, fb2, fb3, fb4, fb5, fb6, fb7 :=
 		arr[start+7], arr[start+6], arr[start+5], arr[start+4],
 		arr[start+3], arr[start+2], arr[start+1], arr[start]

@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5f8467f-c0b2-40e6-a843-a28db9d59148" name="Changes" comment="">
+    <list default="true" id="f5f8467f-c0b2-40e6-a843-a28db9d59148" name="Changes" comment="Some adjustments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/global/common.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/common.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/global/iset.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/iset.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/global/win32.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/win32.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/global/win32_test.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +21,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Go File" />
+        <option value="Go Application" />
       </list>
     </option>
   </component>
@@ -42,7 +47,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -57,7 +62,9 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go Application&quot;,
+    &quot;Go Test.TestByteCodeToWord in github.com/Wafula-Ian01/Epic-VM/tests/global.executor&quot;: &quot;Run&quot;,
+    &quot;Go Test.TestCheckEndian in github.com/Wafula-Ian01/Epic-VM/tests/global.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
@@ -73,6 +80,38 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;
   }
 }</component>
+  <component name="RunManager" selected="Go Test.TestByteCodeToWord in github.com/Wafula-Ian01/Epic-VM/tests/global">
+    <configuration name="TestByteCodeToWord in github.com/Wafula-Ian01/Epic-VM/tests/global" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="Epic-VM" />
+      <working_directory value="$PROJECT_DIR$/tests/global" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Wafula-Ian01/Epic-VM/tests/global" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestByteCodeToWord\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestCheckEndian in github.com/Wafula-Ian01/Epic-VM/tests/global" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="Epic-VM" />
+      <working_directory value="$PROJECT_DIR$/tests/global" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Wafula-Ian01/Epic-VM/tests/global" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestCheckEndian\E$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestByteCodeToWord in github.com/Wafula-Ian01/Epic-VM/tests/global" />
+        <item itemvalue="Go Test.TestCheckEndian in github.com/Wafula-Ian01/Epic-VM/tests/global" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -95,6 +134,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Some adjustments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some adjustments" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

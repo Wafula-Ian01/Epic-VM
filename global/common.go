@@ -1,9 +1,13 @@
 package global
 
+import "C"
+
 //Contains common types to be used.
 
-var TRUE int = 1
-var FALSE int = 0
+/*
+#define TRUE 1
+#define FALSE 0
 
-var SHUTDOWN_OK int = 0
-var SHUTDOWN_ERROR int = 1
+#define SHUTDOWN_OK 0
+#define SHUTDOWN_ERROR 1
+*/
